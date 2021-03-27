@@ -2,40 +2,45 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {useParams} from 'react-router-dom';
 import Product from './Product';
-//import axios from './axios';
+import {db} from './Firebase';
 
 function Search () {
 
-    /*const {title} = useParams();
+    const {title} = useParams();
     const [data, setData] = useState([]);
     const [corData, setCorData] = useState([]);
 
-    const searchData = () => {
-        axios.get('get_all/')
-          .then(res=> {
-              setData(res.data);
-            })
-          .catch(err=>console.log(err))
+    const getProducts = () => {
+        db.collection('products').onSnapshot((result) => {
+            let tempProducts = result.docs.map((doc) => (
+                {
+                    id: doc.id,
+                    product: doc.data(),
+                }
+            ));
+
+            setData(tempProducts);
+        })
     }
 
-    useEffect(()=>{
-        searchData()
-    }, [title])
+    useEffect(() => {
+        getProducts()
+    }, [])
 
     useEffect(()=>{
-        setCorData(data.filter(info => info['title'].includes(title)));
-    }, [data])*/
+        setCorData(data.filter(info => info.product.name.includes(title)));
+    }, [])
 
     return (
         <Container>
-            {/*corData[0] ?
+            {corData[0] ?
             <DataShow> 
                 <h2>Result of search for {title}: </h2>
                 <SearchCard>
-                    {corData.map(item => <Product id={item.id} title={item.name} image={`http://127.0.0.1:8000${item.image}`} price={item.price}/>)}
+                    {corData.map(item => <Product id={item.product.id} name={item.product.name} image={item.product.image} price={item.product.price}/>)}
                 </SearchCard>
             </DataShow>
-            : <h2>No result found for {title}</h2>*/}
+            : <h2>No result found for {title}</h2>}
         </Container>
     )
 }

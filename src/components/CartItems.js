@@ -5,8 +5,7 @@ import CartItem from './CartItem';
 const CartItems = (props) => {
     return (
         <Container>
-            <Title>Shopping Cart</Title>
-            <hr />
+            <Title>Your Cart</Title>
             <ItemsContainer>
                 {
                     props.cartItems.map((item)=>(
@@ -26,11 +25,10 @@ export default CartItems;
 const Container = styled.div`
     flex: 0.8;
     padding: 20px;
-    margin-right: 18px;
-    background-color: white;
+    margin: 20px;
 `
 
-const Title = styled.h1`
+const Title = styled.h2`
     margin-bottom: 8px;
 `
 const ItemsContainer = styled.div`

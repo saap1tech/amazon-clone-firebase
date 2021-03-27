@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Cart from './components/Cart';
 import Home from './components/Home';
 import Search from './components/Search';
-import Info from './components/Info';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { db } from './components/Firebase';
@@ -12,6 +11,7 @@ import { db } from './components/Firebase';
 function App() {
 
   const [ cartItems, setCartItems] = useState([]);
+  const [price, setPrice] = useState(0);
 
   const getCartItems = () => {
     db.collection('cartItems').onSnapshot((result) => {
@@ -25,25 +25,29 @@ function App() {
     })
   }
 
+  const getPrice = () => {
+    cartItems.map((item) => setPrice(price + item.product.price))
+  }
+
   useEffect(() => {
     getCartItems()
+  }, [])
+
+  useEffect(() => {
+    getPrice()
   }, [])
 
   return (
     <Router>
       <Container>
-        <Header />
+        <Header basket={cartItems.length} />
         <Switch>         
           <Route path="/cart">
-            <Cart cartItems={cartItems} />
+            <Cart price={price} length={cartItems.length} cartItems={cartItems} />
           </Route>
 
           <Route path="/search/:title">
             <Search />
-          </Route>
-
-          <Route path="/info/:id">
-            <Info />
           </Route>
           
           <Route path="/">

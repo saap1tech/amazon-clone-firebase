@@ -37,14 +37,14 @@ function Home() {
                      <HomeRow>
                          {data.map((item) => {
                              if (data.indexOf(item) < 2) {
-                                return(<Product name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                                return(<Product id={item.id} name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
                              }
                          })}
                      </HomeRow>
                      <HomeRow>
                         {data.map((item) => {
                              if (data.indexOf(item) >= 2) {
-                                return(<Product name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                                return(<Product id={item.id} name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
                              }
                          })}
                     </HomeRow>   
@@ -53,7 +53,7 @@ function Home() {
                     <HomeRow>
                          {data.map((item) => {
                              if (data.indexOf(item) < 2) {
-                                return(<Product id={item.product.id} name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                                return(<Product id={item.id} name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
                              }
                          })}
                      </HomeRow>

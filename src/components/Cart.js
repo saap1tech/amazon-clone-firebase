@@ -7,7 +7,7 @@ function Cart(props) {
     return (
         <Container>
             <CartItems cartItems={props.cartItems} />
-            <CartTotal />
+            <CartTotal price={props.price} length={props.length} />
         </Container>
     )
 }

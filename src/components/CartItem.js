@@ -2,6 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CartItem = (props) => {
+
+    let options = []
+
+    for (let i = 1; i < Math.max(props.item.quantity + 1, 20); i++) {
+        options.push(<option value={i}> Qty: {i}</option>)
+    }
+
     return (
         <Container>
             <ImageContainer>
@@ -13,20 +20,19 @@ const CartItem = (props) => {
                     <h2>{props.item.name}</h2>
                 </CartItemInfoTop>
                 <CartItemInfoBottom>
+                    <CartItemPrice>
+                        ${props.item.price}
+                    </CartItemPrice>
                     <CartItemQuantityContainer>
-                        {/*<select
+                        {<select
                             value={props.item.quantity}
                         >
-                            {/*options}
-                        </select>*/}
-                        {props.item.quantity}
+                            {options}
+                        </select>}
                     </CartItemQuantityContainer>
                     <CartItemDeleteContainer>Delete</CartItemDeleteContainer>
                 </CartItemInfoBottom>
             </CartItemInfo>
-            <CartItemPrice>
-                ${props.item.price}
-            </CartItemPrice>
         </Container>
     )
 }
@@ -37,7 +43,9 @@ const Container = styled.div`
     padding-top: 12px;
     padding-bottom: 12px;
     display: flex;
-    border-bottom: 1px solid #DDD;
+    background: #f7f7f7;
+    border-radius: 20px;
+    margin: 16px 0;
 `
 
 const ImageContainer = styled.div`
@@ -54,18 +62,20 @@ const ImageContainer = styled.div`
 `
 const CartItemInfo = styled.div`
     flex-grow: 1;
+    padding-left: 20px;
 `
 
 const CartItemInfoTop = styled.div`
-    color: #007185;
+    color: black;
     h2 {
+        font-weight: 600;
         font-size: 18px;
     }
 `
 
 const CartItemInfoBottom = styled.div`
     display: flex;
-    margin-top: 4px;
+    margin-top: 95px;
     align-items: center;
 `
 
@@ -81,14 +91,20 @@ const CartItemQuantityContainer = styled.div`
     }
 `
 
-const CartItemDeleteContainer = styled.div`
-    color: #007185;
-    margin-left: 16px;
+const CartItemDeleteContainer = styled.button`
+    background: #f0c14b;
+    border-radius: 12px;
+    border: 1px solid;
+    margin: 12px;
+    padding: 5px 60px;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
     cursor: pointer;
+    font-size: 16px;
 `
 
 const CartItemPrice = styled.div`
     font-size: 18px;
     font-weight: 700;
-    margin-left: 16px;
+    flex: 1;
 `

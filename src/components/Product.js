@@ -6,6 +6,7 @@ function Product(props) {
 
     const addToCart = () => {
         const cartItem = db.collection('cartItems').doc(props.id);
+        console.log(props.id);
         cartItem.get()
         .then((doc) =>{
             if(doc.exists){

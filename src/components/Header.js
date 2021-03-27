@@ -7,7 +7,7 @@ import {
     Link
 } from "react-router-dom";
 
-function Header() {
+function Header(props) {
     return (
         <Container>
             <HeaderLogo>
@@ -48,7 +48,7 @@ function Header() {
                 <HeaderOptionCart>
                     <Link to="/cart">
                         <ShoppingBasketIcon />
-                        <CartCount>0</CartCount>
+                        <CartCount>{props.basket}</CartCount>
                     </Link>
                 </HeaderOptionCart>
 
