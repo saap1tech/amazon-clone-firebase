@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {useParams} from 'react-router-dom';
 import Product from './Product';
-import axios from './axios';
+//import axios from './axios';
 
 function Search () {
 
-    const {title} = useParams();
+    /*const {title} = useParams();
     const [data, setData] = useState([]);
     const [corData, setCorData] = useState([]);
 
@@ -24,18 +24,18 @@ function Search () {
 
     useEffect(()=>{
         setCorData(data.filter(info => info['title'].includes(title)));
-    }, [data])
+    }, [data])*/
 
     return (
         <Container>
-            {corData[0] ?
+            {/*corData[0] ?
             <DataShow> 
                 <h2>Result of search for {title}: </h2>
                 <SearchCard>
                     {corData.map(item => <Product id={item.id} title={item.name} image={`http://127.0.0.1:8000${item.image}`} price={item.price}/>)}
                 </SearchCard>
             </DataShow>
-            : <h2>No result found for {title}</h2>}
+            : <h2>No result found for {title}</h2>*/}
         </Container>
     )
 }

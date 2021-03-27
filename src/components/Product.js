@@ -1,11 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
+import {db} from './Firebase';
 
 function Product(props) {
+
+    const addToCart = () => {
+        const cartItem = db.collection('cartItems').doc(props.id);
+        cartItem.get()
+        .then((doc) =>{
+            if(doc.exists){
+                cartItem.update({
+                    quantity: doc.data().quantity + 1
+                })
+            } else {
+                db.collection('cartItems').doc(props.id).set({
+                    image: props.image,
+                    name: props.name,
+                    price: props.price,
+                    quantity: 1
+                })
+            }
+        })
+    }
+
     return (
         <Container>
             <Title>
-                {props.title}
+                {props.name}
             </Title>
             <Price>
                 ${props.price}
@@ -13,7 +34,7 @@ function Product(props) {
             <Rating>
                 {Array(props.rating)
                 .fill()
-                .map((_, i) => (
+                .map((i) => (
                 <p>🌟</p>
                 ))}
             </Rating>
@@ -22,7 +43,7 @@ function Product(props) {
                 <ProductButton>
                     More info
                 </ProductButton>
-                <ProductButton>
+                <ProductButton onClick={addToCart}>
                     Add to Cart
                 </ProductButton>
             </ActionSection>
@@ -35,17 +56,15 @@ export default Product
 const Container = styled.div`
     display: flex;
     flex-direction: column;
+    flex: 1;
     max-height: 400px;
-    min-width: 100px;
     background: linear-gradient(45deg, orange, red);
     box-shadow: 2px 2px 2px gray;
     border-radius: 30px;
     margin: 10px;
     padding: 20px;
-    width: 28%;
     z-index: 1;
     align-items: center;
-    justify-content: flex-end;
 `
 const Title = styled.span`
     font-size: 28px;
@@ -81,4 +100,5 @@ const ProductButton = styled.button`
     padding: 5px;
     border-color: #a88734 #9c7e31 #846a29;
     color: #111;
+    cursor: pointer;
 `

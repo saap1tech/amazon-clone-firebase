@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Product from './Product';
-import axios from './axios';
+import { db } from './Firebase';
 
 function Home() {
 
     const [data, setData] = useState([]);
 
-    const get_all = () => {
-        axios.get('get_all/')
-            .then((res) => setData(res.data))
-            .catch((err) => console.log(err))
+    const getProducts = () => {
+        db.collection('products').onSnapshot((result) => {
+            let tempProducts = [];
+
+            tempProducts = result.docs.map((doc) => (
+                {
+                    id: doc.id,
+                    product: doc.data(),
+                }
+            ));
+
+            setData(tempProducts);
+        })
     }
 
     useEffect(() => {
-        get_all()
-    }, [data])
+        getProducts()
+    }, [])
 
     return (
         <Container>
@@ -23,7 +32,32 @@ function Home() {
                 
             </Banner>
             <Content>
-                {data.map(item => <Product title={item.title} rating={item.rating} price={item.price} image={`http://127.0.0.1:8000${item.image}`} />)}
+                    {data.length >= 3 ? 
+                    <>
+                     <HomeRow>
+                         {data.map((item) => {
+                             if (data.indexOf(item) < 2) {
+                                return(<Product name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                             }
+                         })}
+                     </HomeRow>
+                     <HomeRow>
+                        {data.map((item) => {
+                             if (data.indexOf(item) >= 2) {
+                                return(<Product name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                             }
+                         })}
+                    </HomeRow>   
+                    </> 
+                    :
+                    <HomeRow>
+                         {data.map((item) => {
+                             if (data.indexOf(item) < 2) {
+                                return(<Product id={item.product.id} name={item.product.name} rating={item.product.rating} price={item.product.price} image={item.product.image} />)
+                             }
+                         })}
+                     </HomeRow>
+                    }
             </Content>
         </Container>
     )
@@ -32,6 +66,7 @@ function Home() {
 export default Home
 
 const Container = styled.div`
+    position: relative;
     max-width: 1500px;
     margin: 0 auto;
 `
@@ -47,11 +82,12 @@ const Banner = styled.div`
 
 const Content = styled.div`
     margin-top: -350px;
+`
+
+const HomeRow = styled.div`
     display: flex;
     max-width: 1500px;
     margin-left: auto;
     margin-right: auto;
     flex-wrap: wrap;
-    padding: 40px 10px;
-    padding-bottom: 0;
 `
