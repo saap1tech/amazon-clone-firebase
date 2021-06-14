@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 function Header(props) {
+
+    const [search, setSearch] = useState('');
     return (
         <Container>
             <HeaderLogo>
@@ -25,10 +27,10 @@ function Header(props) {
             </HeaderOptionAddress>
 
             <HeaderSearch>
-                <HeaderSearchInput type='text' />
+                <HeaderSearchInput onChange={e=>setSearch(e.target.value)} type='text' />
 
                 <HeaderSearchIconContainer>
-                    <SearchIcon />
+                    <Link to={`/search/${search}`}><SearchIcon /></Link>
                 </HeaderSearchIconContainer>
             </HeaderSearch>
 

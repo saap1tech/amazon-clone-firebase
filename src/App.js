@@ -4,11 +4,9 @@ import Header from './components/Header';
 import Cart from './components/Cart';
 import Home from './components/Home';
 import Search from './components/Search';
-import Login from './components/Login';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { db } from './components/Firebase';
-import Register from './components/Register';
 
 function App() {
 
@@ -50,14 +48,6 @@ function App() {
 
           <Route path="/search/:title">
             <Search />
-          </Route>
-          
-          <Route path="/register">
-            <Register />
-          </Route>
-
-          <Route path="/login">
-            <Login />
           </Route>
 
           <Route path="/">
